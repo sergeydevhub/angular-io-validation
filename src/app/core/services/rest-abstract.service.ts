@@ -2,7 +2,8 @@ import { HttpParams } from "@angular/common/http";
 import * as t from "io-ts";
 import { Observable } from "rxjs";
 
-export type Params = | {[key: string]: string | Array<string> } | HttpParams;
+export type Params = | Record<string, string | Array<string>>
+                     | HttpParams;
 
 export abstract class AbstractRestService<Codec extends t.Mixed> {
   protected constructor(
