@@ -1,13 +1,13 @@
-import { UserSchema } from "./user.schema";
+import { UserEntity, TUserEntity } from "../entities";
 import * as t from "io-ts";
-import {validateSync, ValidationError} from "class-validator";
+import { isRight } from 'fp-ts/lib/Either';
 
-export const UserValidator = new t.Type<UserSchema, UserSchema, never>(
-  UserSchema.name,
-  (entry: unknown): entry is UserSchema => entry instanceof UserSchema,
+export const UserValidator = new t.Type<TUserEntity, TUserEntity, never>(
+  UserEntity.name,
+  (entry: unknown): entry is TUserEntity => entry.constructor.name === UserEntity.name,
   (entry, context) => {
-    const validateErrors: Array<ValidationError> = validateSync(entry);
-    if(validateErrors.length) {
+    const decoded = UserEntity.decode(entry);
+    if(isRight(decoded)) {
       return t.success(entry);
     }
 
