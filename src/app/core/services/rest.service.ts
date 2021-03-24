@@ -26,9 +26,9 @@ export class RestService<Codec extends t.Mixed> extends AbstractRestService<Code
       )
   }
 
-  public getOne(id: number, params?: Params): Observable<t.TypeOf<Codec>> {
+  public get(params: Params): Observable<t.TypeOf<Codec>> {
     return this.client
-      .get<unknown>(`${ this.baseUrl }/${ id }`, { params })
+      .get<unknown>(`${ this.baseUrl }`, { params })
       .pipe(
         switchMap(
           decode(this.codec)

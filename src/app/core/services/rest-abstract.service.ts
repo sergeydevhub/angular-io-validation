@@ -11,10 +11,10 @@ export abstract class AbstractRestService<Codec extends t.Mixed> {
   ) {}
 
   protected get baseUrl(): string {
-    return `/api/${this.resourcePath}`;
+    return `/api/${process.env.API_VERSION}/${this.resourcePath}`;
   }
 
-  public abstract getOne(id: number, params?: Params): Observable<t.TypeOf<Codec>>
+  public abstract get(params: Params): Observable<t.TypeOf<Codec>>
 
   public abstract getList(resource: string): Observable<ReadonlyArray<t.TypeOf<Codec>>>
 
